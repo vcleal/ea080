@@ -1,4 +1,4 @@
-Alguns comandos e procedimentos úteis para agilizar as atividades do laboratório.
+Alguns comandos e procedimentos úteis para agilizar as atividades do laboratório.  
 *Obs.: Considerando a utilização do Linux*
 
 ## VirtualBox
@@ -6,15 +6,15 @@ Alguns comandos e procedimentos úteis para agilizar as atividades do laboratór
 ### VM setup
 
 Após importar o arquivo da máquina virtual, caso queira fazer em casa, o jeito mais fácil de acesso ssh para a VM é via uma interface de rede exclusiva do hospedeiro (host-only), como citado no roteiro. Entretanto caso deseje conectar à internet a partir da VM, sugere-se criar também uma interface NAT, dessa forma nas configurações de rede da máquina virtual, habilite dois adaptadores, um *host-only* e outro *NAT*.
-Se não existir opção para *host-only*, é necessário criar uma nas preferências do VirtualBox (*Arquivo>Preferências>Rede*). Configure um IP se desejar, podendo também habilitar o DHCP para a VM obter um IP automático.
+Se não existir opção para *host-only*, é necessário criar uma nas preferências do VirtualBox (*Arquivo>Preferências>Rede*). Configure um IP se desejar, podendo também habilitar o DHCP para a VM obter um IP automático.  
 **Utilizando 2 adaptadores:** Na máquina virtual edite `/etc/network/interfaces` e adicione uma entrada para o adaptador extra, e.g.
-> auto eth1
+> auto eth1  
 > iface eth1 inet dhcp
 
 ### Pastas compartilhadas
 
-É possível configurar pastas compartilhadas entre a máquina local e a virtual, e assim compartilhar arquivos entre ambas de uma maneira mais simples.
-Nas configurações da VM (>Pastas compartilhadas), pode-se configurar pastas temporárias ou permanentes, estas pastas são caminhos para um diretório da máquina local que serão montados na máquina virtual.
+É possível configurar pastas compartilhadas entre a máquina local e a virtual, e assim compartilhar arquivos entre ambas de uma maneira mais simples.  
+Nas configurações da VM (>Pastas compartilhadas), pode-se configurar pastas temporárias ou permanentes, estas pastas são caminhos para um diretório da máquina local que serão montados na máquina virtual.  
 Após configurar no VirtualBox (caso montagem automática), dentro da VM deve executar o seguinte comando:
 ```bash
 sudo usermod -aG vboxsf mininet
@@ -47,16 +47,16 @@ vboxmanage controlvm "nome da VM" acpipowerbutton
 ```
 
 ### Dentro da máquina virtual
-Supondo o adaptador de rede host-only padrão *vboxnet0* com IP 192.168.56.1/24.
+Supondo o adaptador de rede host-only padrão *vboxnet0* com IP 192.168.56.1/24.  
 Caso não utilize o DHCP, para definir os parâmetros da interface como feito em aula:
 ```bash
 sudo ifconfig eth0 192.168.56.2 netmask 255.255.255.0
 ```
 Para ser permanente deve-se editar o arquivo `/etc/network/interfaces` e adicionar a configuração desejada para o adaptador, e.g.
-> auto eth0
-> iface eth0 inet static
-> address 192.168.56.2
-> netmask 255.255.255.0
+> auto eth0  
+> iface eth0 inet static  
+>     address 192.168.56.2  
+>     netmask 255.255.255.0
 
 ## Acesso SSH
 
@@ -65,9 +65,9 @@ Com o IP configurado utlizamos o seguinte comando para acessar o shell da máqui
 ssh -Y mininet@192.168.56.2
 ```
 Mas podemos facilitar o acesso ssh para a máquina virtual criando o arquivo `.ssh/config` no home da máquina local.
-> Host mininet
-> User mininet
-> Hostname 192.168.56.2
+> Host mininet  
+>     User mininet  
+>     Hostname 192.168.56.2
 
 E assim acessar com:
 ```bash
@@ -113,9 +113,4 @@ sshfs mininet@<IP>:/home/mininet ~/mininet
 Para desmontar o sistema de arquivos montado na máquina local:
 ```bash
 fusermount -u ~/mininet
-```
-
-```python
-def myNetwork():
-  print 'sasd'
 ```
