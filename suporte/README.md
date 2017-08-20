@@ -114,8 +114,3 @@ Para desmontar o sistema de arquivos montado na máquina local:
 ```bash
 fusermount -u ~/mininet
 ```
-
-```python
-def myNetwork():
-  print 'sasd'
-```
