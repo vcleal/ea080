@@ -209,7 +209,7 @@ def startNetwork():
     os.system("killall -9 zebra ospfd > /dev/null 2>&1")
 
     topo = MyTopo(setNat=False)
-    #global net
+    global net
     net = Mininet(topo=topo, autoSetMacs=True, link=TCLink)
     net.start()
     info( '*** Starting routers\n')
