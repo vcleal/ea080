@@ -75,6 +75,7 @@ class MyTopo( Topo ):
         r5 = self.addSwitch('r5', cls=Router)
         if setNat is True:
             r6 = self.addSwitch('r6', cls=Router)
+            self.configNAT()
         else:
             r6 = self.addSwitch('r6', cls=Router)
         # Create links
@@ -105,21 +106,15 @@ class MyTopo( Topo ):
         y1 = self.addHost('y1', ip='10.0.12.1/23',defaultRoute='via 10.0.12.24')
         self.addLink('y1','r4',intfName2='r4-eth4')
 
-        if setNat is True:
-            self.configNAT()
-
-    @staticmethod
-    def configNAT():
+    def configNAT( self ):
         # NAT options
         inetIntf = 'eth0'
         localIntf = 'r6-eth2'
-        localIP = '10.0.2.2'
-        localSubnet = '10.0.2.0/24'
-        natParams = { 'ip' : '%s/24' % localIP }
+        localIP = '10.0.2.2/24'
+        localSubnet = '10.0.0.0/23'
         nat = self.addNode('nat1', cls=NAT, subnet=localSubnet,
            inetIntf=inetIntf, ip=localIP, inNamespace=False)
-        #self.addLink(nat, inetSwitch, intfName1=inetIntf)
-        self.addLink(nat, r6, intfName2=localIntf)
+        self.addLink(nat, 'r6', intfName2=localIntf)
 
 
 def startRouters():
@@ -165,6 +160,7 @@ def configRouters():
     r5.cmd("ifconfig r5-eth2 10.0.1.25/23")
     # Router 6
     r6.cmd("ifconfig r6-eth5 10.0.1.26/23")
+    r6.cmd("ifconfig r6-eth2 10.0.2.15/24")
 
 
 def setRoutes():
@@ -202,6 +198,11 @@ def setRoutes():
     r6.cmd("route add -net 10.0.12.0/23 gw 10.0.1.24")
     r6.cmd("route add -net 10.0.8.0/23 gw 10.0.1.24")
     r6.cmd("route add -net 10.0.6.0/23 gw 10.0.1.24")
+    r6.cmd("route add default gw 10.0.2.2")
+
+def setNATRoute():
+    nat = net.get('nat1')
+    nat.cmd('route add -net 10.0.0.0/23 gw 10.0.2.15')
 
 def startNetwork():
     os.system("rm -f /tmp/R*.log /tmp/R*.pid logs/*")
@@ -218,6 +219,7 @@ def startNetwork():
     configRouters()
     #info( '*** Setting up routes\n')
     #setRoutes()
+    #setNATRoute()
 
     CLI(net)
 
