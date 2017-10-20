@@ -201,7 +201,8 @@ def setRoutes():
     r6.cmd("route add default gw 10.0.2.2")
 
 def setNATRoute():
-    nat = net.get('nat1')
+    nat, r6 = net.get('nat1', 'r6')
+    r6.cmd("route add default gw 10.0.2.2")
     nat.cmd('route add -net 10.0.0.0/23 gw 10.0.2.15')
 
 def startNetwork():
