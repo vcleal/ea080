@@ -122,6 +122,7 @@ def startRouters():
 
     for router in net.switches:
         router.cmd("sysctl -w net.ipv4.ip_forward=1")
+        router.cmd("sysctl -w net.ipv4.conf.all.rp_filter=2")
     sleep(3)
 
     for router in routers:
