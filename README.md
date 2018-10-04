@@ -1,4 +1,4 @@
-### Laboratório 4
+### Laboratório OSPF
 
 O script *topo_A3.py* precisa dos arquivos de configuração do zebra e ospfd que ele carrega na execução.
 Estes arquivos estão no diretório **confs/**.
