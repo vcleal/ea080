@@ -23,6 +23,8 @@ class Router(Switch):
 
     """
     ID = 0
+    isSetup = True
+    
     def __init__(self, name, **kwargs):
         kwargs['inNamespace'] = True
         kwargs['lo'] = 'up'
